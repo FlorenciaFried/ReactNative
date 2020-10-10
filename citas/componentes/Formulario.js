@@ -85,7 +85,7 @@ const Formulario = ({citas, setCitas, setMostrarFormulario}) => {
     setSintomas('');
     setPropietario('');
     setPaciente('');
-    setrHora('');
+    setHora('');
     setFecha('');
     setTelefono('');
   };
