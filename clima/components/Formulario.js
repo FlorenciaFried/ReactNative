@@ -30,16 +30,42 @@ const estiloAnimacion = {
   transform: [{scale: animacionBoton}],
 };
 
-const Clima = () => {
+const consultarClima = () => {
+  if (pais.trim() === '' || ciudad.trim() === '') {
+    mostrarAlerta();
+    return;
+  }
+
+  // consultar la api
+  setConsultar(true);
+};
+
+const mostrarAlerta = () => {
+  Alert.alert('Error', 'Agrega una ciudad y país para la búsqueda', [
+    {text: 'Entendido '},
+  ]);
+};
+
+const Formulario = ({busqueda, setBusqueda, setConsultar}) => {
+  const {pais, ciudad} = busqueda;
+
   return (
     <>
       <View>
         <View>
-          <TextInput style={styles.input} placeholder="ciudad" />
+          <TextInput
+            value={ciudad}
+            onChangeText={(ciudad) => setBusqueda({...busqueda, ciudad})}
+            style={styles.input}
+            placeholder="ciudad"
+          />
         </View>
 
         <View>
-          <Picker itemStyle={{height: 120, backgroundColor: '#FFF'}}>
+          <Picker
+            selectedValue={pais}
+            onChangeText={(ciudad) => setBusqueda({...busqueda, ciudad})}
+            itemStyle={{height: 120, backgroundColor: '#FFF'}}>
             <Picker.Item label="-- Seleccione un país --" value="" />
             <Picker.Item label="Estados Unidos" value="US" />
             <Picker.Item label="México" value="MX" />
@@ -53,7 +79,8 @@ const Clima = () => {
 
         <TouchableWithoutFeedback
           onPressIn={() => animacionEntrada()}
-          onPressOut={() => animacionSalida()}>
+          onPressOut={() => animacionSalida()}
+          onPress={() => consultarClima()}>
           <Animated.View style={[styles.btnBuscar, estiloAnimacion]}>
             <Text style={styles.textoBuscar}>Buscar clima</Text>
           </Animated.View>
